@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 
@@ -34,6 +36,24 @@ public class BeanCounterAutoConfigurationTest {
                                 () -> assertThat(context).doesNotHaveBean(SecondBeanCounterAutoConfiguration.class)));
     }
 
+    @Test
+    void CountsBeansTest() {
+        ApplicationContextRunner contextRunner = new ApplicationContextRunner();
+
+        contextRunner.run(
+                defaultContext -> {
+                    int defaultBeansCount = defaultContext.getBeanDefinitionCount();
+
+                    contextRunner.withUserConfiguration(TestConfig.class, FirstBeanCounterAutoConfiguration.class)
+                            .withPropertyValues("first-enabled=true")
+                            .run(secondContext -> {
+                                int secondBeansCount = secondContext.getBeanDefinitionCount();
+                                assertThat(secondBeansCount).isGreaterThan(defaultBeansCount);
+                                assertThat(defaultBeansCount).isLessThan(secondBeansCount);
+                            });
+                });
+    }
+
     @AutoConfiguration
     @ConditionalOnProperty(name = "first-enabled", havingValue = "true")
     private static class FirstBeanCounterAutoConfiguration {
@@ -55,6 +75,17 @@ public class BeanCounterAutoConfigurationTest {
             ApplicationContext context = event.getApplicationContext();
             int beanCount = context.getBeanDefinitionCount();
             System.out.println("Second! Бинов в контексте: " + beanCount);
+        }
+    }
+
+    @Configuration
+    public static class TestConfig {
+        public TestConfig() {
+
+        }
+        @Bean
+        public String testBean() {
+            return "test-extra-bean";
         }
     }
 }
