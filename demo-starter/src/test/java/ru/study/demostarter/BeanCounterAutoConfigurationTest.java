@@ -1,91 +1,55 @@
 package ru.study.demostarter;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
+import ru.study.demostarter.configuration.BeanCounterAutoConfiguration;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.assertj.core.api.Assertions.assertThat;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BeanCounterAutoConfigurationTest {
 
     private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
             .withInitializer(new ConditionEvaluationReportLoggingListener())
-            .withUserConfiguration(FirstBeanCounterAutoConfiguration.class, SecondBeanCounterAutoConfiguration.class);
+            .withUserConfiguration(BeanCounterAutoConfiguration.class);
 
-    @Test
-    void FirstConfigHasBean() {
-        contextRunner
-                .withPropertyValues("first-enabled=true")
-                .run(context -> assertAll(
-                        () -> assertThat(context).hasSingleBean(FirstBeanCounterAutoConfiguration.class)));
+    private final PrintStream standardOut = System.out;
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
+    }
+
+    @AfterEach
+    public void checkPrintToConsole(){
+        String res = outputStreamCaptor.toString().trim();
+        System.setOut(standardOut);
+        System.out.println("# # # > > > > > > : " + res);
     }
 
     @Test
-    void SecondConfigHasNoBean() {
+    void PrintsToConsole() {
         contextRunner
-                .withPropertyValues("second-enabled=false")
-                .run(context -> assertAll(
-                                () -> assertThat(context).doesNotHaveBean(SecondBeanCounterAutoConfiguration.class)));
-    }
-
-    @Test
-    void CountsBeansTest() {
-        ApplicationContextRunner contextRunner = new ApplicationContextRunner();
-
-        contextRunner.run(
-                defaultContext -> {
-                    int defaultBeansCount = defaultContext.getBeanDefinitionCount();
-
-                    contextRunner.withUserConfiguration(TestConfig.class, FirstBeanCounterAutoConfiguration.class)
-                            .withPropertyValues("first-enabled=true")
-                            .run(secondContext -> {
-                                int secondBeansCount = secondContext.getBeanDefinitionCount();
-                                assertThat(secondBeansCount).isGreaterThan(defaultBeansCount);
-                                assertThat(defaultBeansCount).isLessThan(secondBeansCount);
-                            });
+                .withPropertyValues("starter-enabled=true")
+                .run(context -> {
+                    String actual = outputStreamCaptor.toString().trim();
+                    assertTrue(actual.contains("Бинов в контексте"));
                 });
     }
 
-    @AutoConfiguration
-    @ConditionalOnProperty(name = "first-enabled", havingValue = "true")
-    private static class FirstBeanCounterAutoConfiguration {
-
-        @EventListener(ContextRefreshedEvent.class)
-        public void onApplicationEvent(ContextRefreshedEvent event) {
-            ApplicationContext context = event.getApplicationContext();
-            int beanCount = context.getBeanDefinitionCount();
-            System.out.println("First! Бинов в контексте: " + beanCount);
-        }
-    }
-
-    @AutoConfiguration
-    @ConditionalOnProperty(name = "second-enabled", havingValue = "true")
-    private static class SecondBeanCounterAutoConfiguration {
-
-        @EventListener(ContextRefreshedEvent.class)
-        public void onApplicationEvent(ContextRefreshedEvent event) {
-            ApplicationContext context = event.getApplicationContext();
-            int beanCount = context.getBeanDefinitionCount();
-            System.out.println("Second! Бинов в контексте: " + beanCount);
-        }
-    }
-
-    @Configuration
-    public static class TestConfig {
-        public TestConfig() {
-
-        }
-        @Bean
-        public String testBean() {
-            return "test-extra-bean";
-        }
+    @Test
+    void DoesNotPrintToConsole() {
+        contextRunner
+                .withPropertyValues("starter-enabled=false")
+                .run(context -> {
+                    String actual = outputStreamCaptor.toString();
+                    assertEquals("", actual);
+                });
     }
 }
