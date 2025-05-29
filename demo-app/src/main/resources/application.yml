@@ -1,1 +1,11 @@
 starter-enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, metrics
+  metrics:
+    export:
+      prometheus:
+        enabled: true
