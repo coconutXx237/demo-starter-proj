@@ -30,7 +30,7 @@ public class BeanCounterAutoConfigurationTest {
     public void checkPrintToConsole(){
         String res = outputStreamCaptor.toString().trim();
         System.setOut(standardOut);
-        System.out.println("# # # > > > > > > : " + res);
+        System.out.println("> > > BeanCounterAutoConfigurationTest : " + res);
     }
 
     @Test
