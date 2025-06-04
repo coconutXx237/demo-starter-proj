@@ -34,7 +34,7 @@ public class BeanCounterAutoConfigurationTest {
     }
 
     @Test
-    void PrintsToConsole() {
+    void printsToConsole() {
         contextRunner
                 .withPropertyValues("starter-enabled=true")
                 .run(context -> {
@@ -44,7 +44,7 @@ public class BeanCounterAutoConfigurationTest {
     }
 
     @Test
-    void DoesNotPrintToConsole() {
+    void doesNotPrintToConsole() {
         contextRunner
                 .withPropertyValues("starter-enabled=false")
                 .run(context -> {
