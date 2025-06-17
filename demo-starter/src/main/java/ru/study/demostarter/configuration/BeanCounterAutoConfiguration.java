@@ -7,7 +7,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 
 @AutoConfiguration
-@ConditionalOnProperty(prefix = "starter", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(name = "starter-enabled", havingValue = "true")
 public class BeanCounterAutoConfiguration {
 
     @EventListener(ContextRefreshedEvent.class)

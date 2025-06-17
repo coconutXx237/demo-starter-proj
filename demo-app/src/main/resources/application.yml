@@ -1,2 +1,25 @@
-starter:
-  enabled: true
+starter-enabled: false
+
+spring:
+  cache:
+    type: redis
+    cache-names: moviesCache
+    time-to-live: 10s
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+logging:
+  level:
+    org.springframework.data.redis: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, metrics, caches
+  metrics:
+    export:
+      prometheus:
+        enabled: true

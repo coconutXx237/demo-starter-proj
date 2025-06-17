@@ -1,1 +1,2 @@
 ru.study.demostarter.configuration.BeanCounterAutoConfiguration
+ru.study.demostarter.configuration.TimeDependingAutoConfiguration
