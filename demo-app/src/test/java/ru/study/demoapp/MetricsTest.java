@@ -32,7 +32,7 @@ public class MetricsTest {
 
     private void sendRequestToIncrementMetric() {
         try {
-            mockMvc.perform(get("/hello-world"))
+            mockMvc.perform(get("/public/hello-world"))
                     .andExpect(status().isOk());
         } catch (Exception e) {
             throw new RuntimeException(e);

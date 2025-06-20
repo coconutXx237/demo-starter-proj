@@ -20,7 +20,7 @@ public class InternationalizationTest {
 
     @Test
     void testLocaleDefault() throws Exception {
-        String response = mockMvc.perform(get("/hello-lang"))
+        String response = mockMvc.perform(get("/public/hello-lang"))
                 .andReturn().getResponse().getContentAsString();
         System.out.println("Response default: " + response);
         assertEquals("Welcome!", response);
@@ -28,7 +28,7 @@ public class InternationalizationTest {
 
     @Test
     void testLocaleRu() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/hello-lang")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/public/hello-lang")
                .header("Accept-Language", "ru");
         String response = mockMvc.perform(requestBuilder)
                 .andReturn().getResponse().getContentAsString();
@@ -38,7 +38,7 @@ public class InternationalizationTest {
 
     @Test
     void testLocaleDe() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/hello-lang")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/public/hello-lang")
                 .header("Accept-Language", "de");
         String response = mockMvc.perform(requestBuilder)
                 .andReturn().getResponse().getContentAsString();
