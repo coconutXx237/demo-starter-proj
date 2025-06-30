@@ -1,18 +1,18 @@
 package ru.study.demoapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+/*import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;*/
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Component
+//@Component
 public class UserService {
 
-    private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
+/*    private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -32,5 +32,5 @@ public class UserService {
                 .build();
         inMemoryUserDetailsManager.createUser(newUser);
         return "User " + username + " with password " + password + " added successfully";
-    }
+    }*/
 }
