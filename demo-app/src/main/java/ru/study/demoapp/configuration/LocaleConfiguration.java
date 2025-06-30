@@ -9,7 +9,7 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.util.Locale;
 
-@Configuration
+//@Configuration
 public class LocaleConfiguration {
     @Bean
     public MessageSource messageSource() {
