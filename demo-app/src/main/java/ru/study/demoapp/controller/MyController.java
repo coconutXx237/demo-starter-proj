@@ -14,7 +14,7 @@ import java.util.Locale;
 @RequestMapping("/public")
 public class MyController {
 
-    private final CounterMetric counterMetric;
+/*    private final CounterMetric counterMetric;
     private final MessageSource messageSource;
 
     @Autowired
@@ -32,5 +32,5 @@ public class MyController {
     @GetMapping("/hello-lang")
     public String getGreeting(Locale locale) {
         return messageSource.getMessage("greeting", null, locale);
-    }
+    }*/
 }

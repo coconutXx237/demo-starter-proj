@@ -7,19 +7,19 @@ import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
+/*import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializationContext;*/
 
 import java.time.Duration;
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class MyCacheManagerConfiguration {
 
-    @Bean
+/*    @Bean
     public CacheManager redisCacheManager(RedisConnectionFactory connectionFactory) {
         RedisCacheConfiguration redisConfig = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofSeconds(10))
@@ -50,5 +50,5 @@ public class MyCacheManagerConfiguration {
         CompositeCacheManager manager = new CompositeCacheManager(redisCacheManager, simpleCacheManager);
         manager.setFallbackToNoOpCache(true);
         return manager;
-    }
+    }*/
 }

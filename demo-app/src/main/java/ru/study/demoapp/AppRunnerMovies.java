@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import ru.study.demoapp.repository.MovieRepository;
 
-@Component
+//@Component
 public class AppRunnerMovies implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(AppRunnerMovies.class);

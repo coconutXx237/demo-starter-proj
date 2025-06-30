@@ -16,7 +16,7 @@ public class SimpleMovieRepository implements MovieRepository{
         this.slowService = slowService;
     }
 
-    @Cacheable(value = "moviesCache", cacheManager = "redisCacheManager")
+//    @Cacheable(value = "moviesCache", cacheManager = "redisCacheManager")
     @Override
     public Movie getByTitle(String title) {
         slowService.simulateSlowService();
