@@ -1,20 +1,21 @@
-package ru.study.demoapp.service;
+package ru.study.demoapp.service.impl;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import ru.study.demoapp.model.Person;
+import ru.study.demoapp.service.PersonService2;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
-public class PersonServiceJDBCTemplate {
+public class PersonServiceJDBCTemplateImpl implements PersonService2 {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public PersonServiceJDBCTemplate(JdbcTemplate jdbcTemplate) {
+    public PersonServiceJDBCTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -27,16 +28,19 @@ public class PersonServiceJDBCTemplate {
         return person;
     };
 
+    @Override
     public void save(Person person) {
         String sql = "INSERT INTO persons (username, age, city) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, person.getName(), person.getAge(), person.getCity());
     }
 
+    @Override
     public List<Person> findAll18PlusNotMoscow() {
         String sql = "SELECT id, username, age, city FROM persons WHERE age > 18 AND city != 'Москва'";
         return jdbcTemplate.query(sql, personRowMapperRowMapper);
     }
 
+    @Override
     public Map<String, Integer> countPersonsByCity() {
         String sql = "SELECT city, COUNT(*) as count FROM persons GROUP BY city";
         return jdbcTemplate.query(sql, resultSet -> {

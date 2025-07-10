@@ -3,7 +3,7 @@ package ru.study.demoapp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.study.demoapp.model.Person;
-import ru.study.demoapp.service.PersonServiceJDBCTemplate;
+import ru.study.demoapp.service.impl.PersonServiceJDBCTemplateImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -12,10 +12,10 @@ import java.util.Map;
 @RequestMapping("/template")
 public class PersonJDBCTemplateController {
 
-    private final PersonServiceJDBCTemplate personService;
+    private final PersonServiceJDBCTemplateImpl personService;
 
     @Autowired
-    public PersonJDBCTemplateController(PersonServiceJDBCTemplate personService) {
+    public PersonJDBCTemplateController(PersonServiceJDBCTemplateImpl personService) {
         this.personService = personService;
     }
 

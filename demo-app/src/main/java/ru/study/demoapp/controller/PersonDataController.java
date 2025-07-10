@@ -3,7 +3,7 @@ package ru.study.demoapp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.study.demoapp.model.Person;
-import ru.study.demoapp.service.PersonServiceData;
+import ru.study.demoapp.service.impl.PersonServiceDataImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -12,16 +12,16 @@ import java.util.Map;
 @RequestMapping("/data")
 public class PersonDataController {
 
-    private final PersonServiceData personService;
+    private final PersonServiceDataImpl personService;
 
     @Autowired
-    public PersonDataController(PersonServiceData personService) {
+    public PersonDataController(PersonServiceDataImpl personService) {
         this.personService = personService;
     }
 
     @GetMapping("/18")
     public List<Person> getAdultsOutsideMoscow() {
-        return personService.findAdultsOutsideMoscow();
+        return personService.findAll18PlusNotMoscow();
     }
 
     @PostMapping

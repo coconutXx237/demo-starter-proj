@@ -26,6 +26,12 @@ public class Person {
         this.city = city;
     }
 
+    public Person(String name, Integer age, String city) {
+        this.name = name;
+        this.age = age;
+        this.city = city;
+    }
+
     public Person() {
     }
 

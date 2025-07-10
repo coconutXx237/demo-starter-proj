@@ -1,39 +1,45 @@
-package ru.study.demoapp.service;
+package ru.study.demoapp.service.impl;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.study.demoapp.model.CityCount;
 import ru.study.demoapp.model.Person;
 import ru.study.demoapp.repository.PersonRepository;
+import ru.study.demoapp.service.PersonService2;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class PersonServiceData {
+public class PersonServiceDataImpl implements PersonService2 {
 
     private final PersonRepository personRepository;
 
     @Autowired
-    public PersonServiceData(PersonRepository personRepository) {
+    public PersonServiceDataImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
+    @Override
     public void save(Person person) {
         personRepository.save(person);
     }
 
-    public List<Person> findAdultsOutsideMoscow() {
+    @Override
+    public List<Person> findAll18PlusNotMoscow() {
         return personRepository.findByAgeAndCity();
     }
 
+    @Override
     public Map<String, Integer> countPersonsByCity() {
-        List<Object[]> rawResult = personRepository.countByCity();
+        List<CityCount> rawResult = personRepository.countByCity();
         Map<String, Integer> result = new HashMap<>();
-        for (Object[] row : rawResult) {
-            String city = (String) row[0];
-            int count = ((Number) row[1]).intValue();
+        for (CityCount el : rawResult) {
+            String city = el.getCity();
+            int count = (int) el.getCount();
+
             result.put(city, count);
         }
         return result;
