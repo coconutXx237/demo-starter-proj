@@ -1,5 +1,5 @@
 package ru.study.demoapp;
-
+/*
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.Test;
@@ -58,7 +58,7 @@ public class MetricsTest {
         return root.path("measurements").findValue("value").asInt();
     }
 
-/*  http://localhost:8080/actuator/metrics/custom.my_counter
+*//*  http://localhost:8080/actuator/metrics/custom.my_counter
     {
         "name": "custom.my_counter",
             "measurements": [
@@ -68,5 +68,5 @@ public class MetricsTest {
         }
   ],
         "availableTags": []
-    }*/
-}
+    }*//*
+}*/

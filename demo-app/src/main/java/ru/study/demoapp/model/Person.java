@@ -1,16 +1,32 @@
 package ru.study.demoapp.model;
 
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "persons")
 public class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "username")
     private String name;
     private Integer age;
     private String city;
+    @Column(name = "version")
+    @Version
+    private Integer version;
 
 
     public Person(Integer id, String name, Integer age, String city) {
         this.id = id;
+        this.name = name;
+        this.age = age;
+        this.city = city;
+    }
+
+    public Person(String name, Integer age, String city) {
         this.name = name;
         this.age = age;
         this.city = city;
@@ -49,6 +65,14 @@ public class Person {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-    private final UserService userService;
+/*    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -29,5 +29,5 @@ public class UserController {
     @PostMapping("public/add-user")
     public String addUser(@RequestBody Map<String, String> user) {
         return userService.addInMemoryUser(user);
-    }
+    }*/
 }
