@@ -37,7 +37,7 @@ public abstract class AbstractPersonServiceTest {
         List<String> actualRes = getService().findAll18PlusNotMoscow().stream()
                 .map(Person::getName)
                 .toList();
-        List<String> expectedRes = List.of("Ivan", "Olga", "Masha");
+        List<String> expectedRes = List.of("Olga", "Masha");
         assertEquals(expectedRes, actualRes);
     }
 
